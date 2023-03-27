@@ -126,44 +126,21 @@ vector<coordVectorBLH<double>> MapMarbleTrassa::buildingRouteKA()
     {
 
 
-//        for (i = 0; i < 3; i++)
-//        {
 
     /*coordVectorXYZ<*/double/*>*/ * xyz3;
     coordVectorBLH<double> blh3, blh;
 
-//    for (int i = 0; i < 3; i++)
-//    {
-//        xyz3[i] = coord[n * 6 - i * 6 - j - 1];
-//    xyz3[0] = coord[(j-1) * 6 + 0];
-//    xyz3[1] = coord[(j-1) * 6 + 1];
-//    xyz3[2] = coord[(j-1) * 6 + 2];
-
-
     double b, l;
-//    xyz2blh::XYZ_2_BLH_R(xyz3, /*R2G(*/b /*)*/, /*R2G(*/l/*)*/, blh3.h, R);
+
     blh3 = xyz2blh::XYZ_2_BLH(coord[(j-1) * 6], coord[(j-1) * 6 +1], coord[(j-1) * 6 +2], R);
-//    blh3 = xyz2blh::XYZ_2_BLH(coord[(j-1) * 6], coord[(j-1) * 6 +1], coord[(j-1) * 6 +2]);
-//    qDebug() << j << " " <<  QByteArray::number(coord[(j-1) * 6 /*+ i*/], 'f');
-//    qDebug() << j << " "<< QByteArray::number(coord[(j-1) * 6 + /*(i+*/1/*)*/], 'f');
-//    qDebug() << j << " "<< QByteArray::number(coord[(j-1) * 6 + /*(i+*/2/*)*/], 'f');
 
-        qDebug() << j << " " <<  QByteArray::number(R2G(blh3.b), 'f');
-        qDebug() << j << " "<< QByteArray::number(R2G(blh3.l), 'f');
-        qDebug() << j << " "<< QByteArray::number(blh3.h, 'f');
-//        qDebug() << j << " " <<  QByteArray::number(R2G(blh.b), 'f');
-//        qDebug() << j << " "<< QByteArray::number(R2G(blh.l), 'f');
-//        qDebug() << j << " "<< QByteArray::number(blh.h, 'f');
 
-//    blh3.b = R2G(b);
-//    blh3.l = R2G(l);
     coordBLH_R.push_back(blh3);
-//    }
+
     }
 
-
     return coordBLH_R;
-//    int y = 120;
+
 }
 
 vector<double> MapMarbleTrassa::Runge_Kutta(vector<double> init_coord, vector<double> acc, int n, int h)
