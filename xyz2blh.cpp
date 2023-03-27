@@ -159,9 +159,9 @@ bool xyz2blh::XYZ_2_BLH_R(double *mq3, double &Br, double &Lr, double &h, double
 
 coordVectorBLH<double> xyz2blh::XYZ_2_BLH(double x, double y, double z, double &R, int SK, double eps)
 {
-    double a,StSzh,e2,D,sinBr,cosBr,La,c,p,s1,s2,b,sinb,cosb,sin2b,cos2b,dd,r1;
+        double a,StSzh,e2,D,sinBr,cosBr,La,c,p,s1,s2,b,sinb,cosb,sin2b,cos2b,dd,r1;
 
-    coordVectorBLH<double> blh;
+    coordVectorBLH<double> blh, blhDegrees;
 
     double xyz[3];
     xyz[0] = x;
@@ -195,12 +195,15 @@ coordVectorBLH<double> xyz2blh::XYZ_2_BLH(double x, double y, double z, double &
     {
         // La - угол отклонения от оси X
         La = fabs( asin( xyz[1]/D ) );
+//        La = fabs( TMicsellFunction::VirtelAsin(xyz[1],D ) );
+
+//        La = TMicsellFunction::radians(La);
 
         // если Y < 0
         if ( xyz[1] < 0 )
         {
             // если X > 0
-            if ( xyz[0] > 0 ) blh.l = D2PI - La;
+            if ( xyz[0] > 0 ) blh.l = /*/*TMicsellFunction::degrees(*/D2PI/*)360*/ - La;
             else blh.l = M_PI + La;       // если X < 0
         }
         else	               // если Y > 0
@@ -209,7 +212,7 @@ coordVectorBLH<double> xyz2blh::XYZ_2_BLH(double x, double y, double z, double &
             else blh.l = M_PI - La;       // если X < 0
         }
 
-        if ( blh.l > M_PI ) blh.l -= D2PI;           // коррекция под карту
+        if ( blh.l > M_PI ) blh.l -= D2PI/*360*/;           // коррекция под карту
 
         if ( xyz[2] == DNULL )     // если Z = 0
         {
@@ -219,6 +222,9 @@ coordVectorBLH<double> xyz2blh::XYZ_2_BLH(double x, double y, double z, double &
         else      // --------------- если Z <> 0 ---------------
         {
             c = asin( xyz[2] / R );
+//            c = TMicsellFunction::VirtelAsin( xyz[2], R );
+//            c = TMicsellFunction::radians(c);
+
             p = e2 * a / ( 2 * R );
 
             s2 = 0;
@@ -226,24 +232,29 @@ coordVectorBLH<double> xyz2blh::XYZ_2_BLH(double x, double y, double z, double &
             do
             {
                 s1 = s2;
-                b  = c + s1;
+                b  = c + /*TMicsellFunction::degrees(*/s1/*)*/;
 
                 SinCos( b,sinb,cosb );
                 SinCos( 2*b,sin2b,cos2b );
 
                 r1 = 1 - e2 * sinb * sinb;
                 s2 = asin( p * sin2b / sqrt( r1 ) );
+//                s2 = TMicsellFunction::VirtelAsin(p * sin2b , sqrt( r1 ) );
+//                s2 = TMicsellFunction::radians(s2);
                 dd = fabs( s2 - s1 );
 
             } while ( dd >= eps );   // условие dd <= E-4 угл.сек  ->  dh < 0.003 м
 
-            blh.b = b;
+            blh.b = /*TMicsellFunction::degrees(*/b/*)*/;
 
             blh.h  = D*cosb + xyz[2]*sinb - a * sqrt( 1 - e2 * sinb*sinb );
         }
     }
 
-    return blh;
+    blhDegrees.b = TMicsellFunction::deg(blh.b);
+    blhDegrees.l = TMicsellFunction::degrees(blh.l);
+
+    return /*blh*/blhDegrees;
 }
 
 coordVectorBLH<double> xyz2blh::XYZ_2_BLH(double x, double y, double z)
