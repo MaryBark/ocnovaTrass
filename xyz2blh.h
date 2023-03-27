@@ -4,6 +4,7 @@
 #include <QString>
 #include "definitions.h"
 #include "coordinateVectors.h"
+#include "TMicsellFunction.h"
 
 class xyz2blh
 {
