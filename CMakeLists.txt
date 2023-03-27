@@ -46,6 +46,7 @@ set(PROJECT_SOURCES
         interaction2Database.h interaction2Database.cpp
         perturbationsKA.h perturbationsKA.cpp
         xyz2blh.h xyz2blh.cpp
+        MicsellFunction.h TMicsellFunction.cpp
 )
 message("PROJECT_SOURCES")
 
